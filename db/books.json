@@ -1,0 +1,14 @@
+[
+    {
+        "id": 1,
+        "title": "Things fall apart",
+        "author": "John Smith",
+        "published": "2015-12-12"
+    },
+    {
+        "id": 2,
+        "title": "The Young Shall Grow",
+        "author": "Loche Smith",
+        "published": "2002-12-12"
+    }
+]
