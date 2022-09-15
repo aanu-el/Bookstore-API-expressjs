@@ -121,49 +121,33 @@ function getAllUsers(req, res) {
 }
 
 // Create Books Route
-function createBook(req, res) {
-    const body = []
-    req.on('data', (chunk) => {
-        body.push(chunk)
-    })
+function createBook(req, res, newBook) {
 
-    req.on('end', () => {
-        const parsedBody = Buffer.concat(body).toString()
-        if (!parsedBody) {
+    fs.readFile(booksDbPath, 'utf-8', (err, books) => {
+        if (err) {
             res.writeHead(400)
             console.log(err)
-            res.end('Bad Request')
         }
 
-        let newBook = JSON.parse(parsedBody)
+        let allBooks = JSON.parse(books)
 
-        fs.readFile(booksDbPath, 'utf-8', (err, books) => {
+        let lastBookId = allBooks[allBooks.length - 1].id
+        newBook.id = lastBookId + 1
+
+        let updatedBooks = [...allBooks, newBook]
+        console.log(updatedBooks)
+
+        fs.writeFile(booksDbPath, JSON.stringify(updatedBooks), (err) => {
             if (err) {
                 res.writeHead(400)
                 console.log(err)
+                res.end('An error occurred when saving the file to database')
             }
 
-            let allBooks = JSON.parse(books)
-
-            let lastBookId = allBooks[allBooks.length - 1].id
-            newBook.id = lastBookId + 1
-
-            let updatedBooks = [...allBooks, newBook]
-            console.log(updatedBooks)
-
-            fs.writeFile(booksDbPath, JSON.stringify(updatedBooks), (err) => {
-                if (err) {
-                    res.writeHead(400)
-                    console.log(err)
-                    res.end('An error occurred when saving the file to database')
-                }
-
-                res.end(JSON.stringify(updatedBooks))
-            })
-
-
+            res.end(JSON.stringify(updatedBooks))
         })
     })
+
 }
 
 

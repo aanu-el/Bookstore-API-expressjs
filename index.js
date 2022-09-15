@@ -6,7 +6,7 @@ const server = http.createServer(requestHandler)
 // import the request handlers for each route
 const { createUser, authenticateUser, getAllUsers, createBook, deleteBook, loanBook, returnBook, updateBooks } = require('./required_files/requestHandler')
 
-const { userAuthentication } = require('./required_files/authentication')
+const { userAuth, bookAuth } = require('./required_files/authentication')
 
 // Request Handler for the http server
 function requestHandler(req, res) {
@@ -17,7 +17,7 @@ function requestHandler(req, res) {
     } else if (req.url === '/authenticateUser' && req.method === 'POST') {
         authenticateUser(req, res)
     } else if (req.url === '/getAllUsers' && req.method === 'GET') {
-        userAuthentication(req, res, ['admin'])
+        userAuth(req, res, ['admin'])
             .then(() => {
                 getAllUsers(req, res)
             })
@@ -29,9 +29,9 @@ function requestHandler(req, res) {
                 console.log(err)
             })
     } else if (req.url === '/createBook' && req.method === 'POST') {
-        authentication(req, res, ['admin'])
-            .then(() => {
-                createBook(req, res)
+        bookAuth(req, res, ['admin'])
+            .then((book) => {
+                createBook(req, res, book)
             })
             .catch((err) => {
                 res.writeHead(401)
@@ -46,7 +46,7 @@ function requestHandler(req, res) {
     } else if (req.url === '/loanOut' && req.method === 'POST') {
         loanBook(req, res)
     } else if (req.url === '/returnBook' && req.method === 'POST') {
-        returnBook(req, res)
+        returnBook(req, res) 
     } else if (req.url === '/updateBooks' && req.method === 'PUT') {
         updateBooks(req, res)
     }
