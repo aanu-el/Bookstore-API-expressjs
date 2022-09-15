@@ -176,9 +176,24 @@ function deleteBook(req, res, bookToDelete) {
     })
 }
 
-function loanBook(req, res) {
-    res.writeHead(200)
-    res.end('Loaned out book successfully')
+function loanBook(req, res, bookToLoan) {
+    fs.readFile(booksDbPath, 'utf-8', (err, books) => {
+        if (err) {
+            res.writeHead(400)
+            console.log(err)
+        }
+
+        let allBooks = JSON.parse(books)
+        const bookFound = allBooks.find(book => book.title === bookToLoan.title)
+
+        if (bookFound) {
+            res.writeHead(200)
+            res.end('The Book you want to loan is available')
+        } else {
+            res.writeHead(404)
+            res.end('The Book you want to loan is not available')
+        }
+    })
 }
 
 function returnBook(req, res) {

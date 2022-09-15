@@ -54,7 +54,17 @@ function requestHandler(req, res) {
             })
 
     } else if (req.url === '/loanOut' && req.method === 'POST') {
-        loanBook(req, res)
+        bookAuth(req, res, ['visitor'])
+            .then((book) => {
+                loanBook(req, res, book)
+            }).catch((err) => {
+                res.writeHead(400)
+                res.end(JSON.stringify({
+                    "message": err
+                }))
+                console.log(err)
+            }) 
+
     } else if (req.url === '/returnBook' && req.method === 'POST') {
         returnBook(req, res)
     } else if (req.url === '/updateBooks' && req.method === 'PUT') {
