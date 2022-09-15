@@ -40,13 +40,23 @@ function requestHandler(req, res) {
                 }))
                 console.log(err)
             })
-        
+
     } else if (req.url === '/deleteBook' && req.method === 'DELETE') {
-        deleteBook(req, res)
+        bookAuth(req, res, ['admin'])
+            .then((book) => {
+                deleteBook(req, res, book)
+            }).catch((err) => {
+                res.writeHead(401)
+                res.end(JSON.stringify({
+                    "message": err
+                }))
+                console.log(err)
+            })
+
     } else if (req.url === '/loanOut' && req.method === 'POST') {
         loanBook(req, res)
     } else if (req.url === '/returnBook' && req.method === 'POST') {
-        returnBook(req, res) 
+        returnBook(req, res)
     } else if (req.url === '/updateBooks' && req.method === 'PUT') {
         updateBooks(req, res)
     }

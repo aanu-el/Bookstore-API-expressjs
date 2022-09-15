@@ -151,9 +151,29 @@ function createBook(req, res, newBook) {
 }
 
 
-function deleteBook(req, res) {
-    res.writeHead(200)
-    res.end('Delete Book Successfully')
+function deleteBook(req, res, bookToDelete) {
+    fs.readFile(booksDbPath, 'utf-8', (err, books) => {
+        if (err) {
+            res.writeHead(400)
+            res.end('An error occurred when reading the file')
+            console.log(err)
+        }
+
+        const allBooks = JSON.parse(books)
+        const bookIndex = allBooks.findIndex(book => book.title === bookToDelete.title && book.id === bookToDelete.id)
+
+        allBooks.splice(bookIndex, 1)
+
+        fs.writeFile(booksDbPath, JSON.stringify(allBooks), (err) => {
+            if (err) {
+                res.writeHead(500)
+                res.end('An error occurred when saving the file')
+                console.log(err)
+            }
+
+            res.end(JSON.stringify(allBooks))
+        })
+    })
 }
 
 function loanBook(req, res) {

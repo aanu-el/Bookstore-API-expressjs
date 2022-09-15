@@ -3,6 +3,21 @@ const path = require('path')
 
 const usersDbPath = path.join(__dirname, '..', 'db', 'users.json')
 
+// ----- Reusable Block of Code -------
+function getRegisteredUsers() {
+    return new Promise((resolve, reject) => {
+        fs.readFile(usersDbPath, 'utf8', (err, users) => {
+            if (err) {
+                reject(err)
+            }
+
+            resolve(JSON.parse(users))
+        })
+    })
+}
+// --------- ends Here----------
+
+
 function userAuth(req, res, roles) {
     return new Promise((resolve, reject) => {
         const body = []
@@ -37,18 +52,6 @@ function userAuth(req, res, roles) {
     })
 }
 
-function getRegisteredUsers() {
-    return new Promise((resolve, reject) => {
-        fs.readFile(usersDbPath, 'utf8', (err, users) => {
-            if (err) {
-                reject(err)
-            }
-
-            resolve(JSON.parse(users))
-        })
-    })
-}
-
 function bookAuth(req, res, roles) {
     return new Promise((resolve, reject) => {
         const body = []
@@ -78,5 +81,7 @@ function bookAuth(req, res, roles) {
         })
     })
 }
+
+
 
 module.exports = { userAuth, bookAuth }
