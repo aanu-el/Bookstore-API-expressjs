@@ -2,31 +2,31 @@
     {
         "username": "red-knight",
         "password": "youknowme",
-        "user-type": "admin",
+        "role": "admin",
         "id": 1
     },
     {
         "username": "rookie",
         "password": "chessboard",
-        "user-type": "visitor",
+        "role": "visitor",
         "id": 2
     },
     {
         "username": "westtile",
         "password": "zippyclick",
-        "user-type": "visitor",
+        "role": "visitor",
         "id": 3
     },
     {
         "username": "chessQueen",
         "password": "queenBee",
-        "user-type": "admin",
+        "role": "admin",
         "id": 4
     },
     {
         "username": "ipman",
         "password": "codebase12",
-        "user-type": "visitor",
+        "role": "visitor",
         "id": 5
     }
 ]

@@ -5,7 +5,8 @@ const server = http.createServer(requestHandler)
 
 // import the request handlers for each route
 const { createUser, authenticateUser, getAllUsers, createBook, deleteBook, loanBook, returnBook, updateBooks } = require('./required_files/requestHandler')
-const authentication = require('./required_files/authentication')
+
+const { authentication } = require('./required_files/authentication')
 
 // Request Handler for the http server
 function requestHandler(req, res) {
@@ -16,12 +17,12 @@ function requestHandler(req, res) {
     } else if (req.url === '/authenticateUser' && req.method === 'POST') {
         authenticateUser(req, res)
     } else if (req.url === '/getAllUsers' && req.method === 'GET') {
-        authentication(req, res, [admin])
+        authentication(req, res, ['admin'])
             .then(() => {
                 getAllUsers(req, res)
             })
             .catch((err) => {
-                res.writeHead(400)
+                res.writeHead(401)
                 res.end(JSON.stringify({
                     "message": err
                 }))

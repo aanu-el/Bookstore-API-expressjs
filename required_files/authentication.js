@@ -3,27 +3,37 @@ const path = require('path')
 
 const usersDbPath = path.join(__dirname, '..', 'db', 'users.json')
 
-function authentication(req, res, role) {
-    const body = []
+function authentication(req, res, roles) {
+    return new Promise((resolve, reject) => {
+        const body = []
 
-    req.on('data', (chunk) => {
-        body.push(chunk)
-    })
+        req.on('data', (chunk) => {
+            body.push(chunk)
+        })
 
-    req.on('end', async () => {
-        const parsedBody = Buffer.concat(body).toString()
+        req.on('end', async () => {
+            const parsedBody = Buffer.concat(body).toString()
 
-        if (!parsedBody) {
-            res.writeHead(400)
-            console.log(err)
-            res.end('Username and Password not Provided')
-        }
+            if (!parsedBody) {
+                reject('Username and Password not found')
+            }
 
-        let userDetails = JSON.parse(parsedBody)
+            let userDetails = JSON.parse(parsedBody)
 
-        const allRegisteredUsers = await getRegisteredUsers()
+            const allRegisteredUsers = await getRegisteredUsers()
 
-        
+            let userFound = allRegisteredUsers.find(user => user.username === userDetails.username && user.password === userDetails.password)
+
+            if (!userFound) {
+                reject('Invalid User! Please register')
+            }
+
+            if (!roles.includes(userFound.role)) {
+                reject('You do not have required access to get all users details')
+            }
+
+            resolve()
+        })
     })
 }
 
@@ -39,4 +49,4 @@ function getRegisteredUsers() {
     })
 }
 
-module.exports = authentication
+module.exports = { authentication }
