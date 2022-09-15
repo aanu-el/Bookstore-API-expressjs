@@ -3,7 +3,7 @@ const path = require('path')
 
 const usersDbPath = path.join(__dirname, '..', 'db', 'users.json')
 
-function authentication(req, res, roles) {
+function userAuthentication(req, res, roles) {
     return new Promise((resolve, reject) => {
         const body = []
 
@@ -49,4 +49,4 @@ function getRegisteredUsers() {
     })
 }
 
-module.exports = { authentication }
+module.exports = { userAuthentication }

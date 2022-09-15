@@ -120,10 +120,52 @@ function getAllUsers(req, res) {
     })
 }
 
+// Create Books Route
 function createBook(req, res) {
-    res.writeHead(200)
-    res.end('Create Book Successfully')
+    const body = []
+    req.on('data', (chunk) => {
+        body.push(chunk)
+    })
+
+    req.on('end', () => {
+        const parsedBody = Buffer.concat(body).toString()
+        if (!parsedBody) {
+            res.writeHead(400)
+            console.log(err)
+            res.end('Bad Request')
+        }
+
+        let newBook = JSON.parse(parsedBody)
+
+        fs.readFile(booksDbPath, 'utf-8', (err, books) => {
+            if (err) {
+                res.writeHead(400)
+                console.log(err)
+            }
+
+            let allBooks = JSON.parse(books)
+
+            let lastBookId = allBooks[allBooks.length - 1].id
+            newBook.id = lastBookId + 1
+
+            let updatedBooks = [...allBooks, newBook]
+            console.log(updatedBooks)
+
+            fs.writeFile(booksDbPath, JSON.stringify(updatedBooks), (err) => {
+                if (err) {
+                    res.writeHead(400)
+                    console.log(err)
+                    res.end('An error occurred when saving the file to database')
+                }
+
+                res.end(JSON.stringify(updatedBooks))
+            })
+
+
+        })
+    })
 }
+
 
 function deleteBook(req, res) {
     res.writeHead(200)
@@ -144,6 +186,7 @@ function updateBooks(req, res) {
     res.writeHead(200)
     res.end('Book Updated Successfully')
 }
+
 
 // Export the request Handlers as modules
 module.exports = {
