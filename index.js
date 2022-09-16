@@ -63,12 +63,35 @@ function requestHandler(req, res) {
                     "message": err
                 }))
                 console.log(err)
-            }) 
+            })
 
     } else if (req.url === '/returnBook' && req.method === 'POST') {
-        returnBook(req, res)
+        bookAuth(req, res, ['visitor'])
+            .then((book) => {
+                res.writeHead(200)
+                returnBook(req, res, book)
+            })
+            .catch((err) => {
+                res.writeHead(400)
+                res.end(JSON.stringify({
+                    "message": err
+                }))
+                console.log(err)
+            })
+
     } else if (req.url === '/updateBooks' && req.method === 'PUT') {
-        updateBooks(req, res)
+        bookAuth(req, res, ['admin'])
+            .then((book) => {
+                updateBooks(req, res, book)
+            })
+            .catch((err) => {
+                res.writeHead(400)
+                res.end(JSON.stringify({
+                    "message": err
+                }))
+                console.log(err)
+            })
+
     }
     else {
         res.writeHead(404)

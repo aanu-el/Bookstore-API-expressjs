@@ -183,7 +183,7 @@ function loanBook(req, res, bookToLoan) {
             console.log(err)
         }
 
-        let allBooks = JSON.parse(books)
+        const allBooks = JSON.parse(books)
         const bookFound = allBooks.find(book => book.title === bookToLoan.title)
 
         if (bookFound) {
@@ -196,9 +196,36 @@ function loanBook(req, res, bookToLoan) {
     })
 }
 
-function returnBook(req, res) {
-    res.writeHead(200)
-    res.end('Returned Book Successfully')
+function returnBook(req, res, returnedBook) {
+    fs.readFile(booksDbPath, 'utf-8', (err, books) => {
+        if (err) {
+            res.writeHead(400)
+            console.log(err)
+        }
+
+        const allBooks = JSON.parse(books)
+        const bookFound = allBooks.find(book => book.title === returnedBook.title)
+
+        if (bookFound) {
+            res.writeHead(500)
+            res.end('You have already returned this book')
+        } else {
+            let lastBookId = allBooks[allBooks.length - 1].id
+            returnedBook.id = lastBookId + 1
+
+            let updatedBooks = [...allBooks, returnedBook]
+
+            fs.writeFile(booksDbPath, JSON.stringify(updatedBooks), (err) => {
+                if (err) {
+                    res.writeHead(500)
+                    res.end('An error occurred when saving the file')
+                    console.log(err)
+                }
+
+                res.end(JSON.stringify(updatedBooks))
+            })
+        }
+    })
 }
 
 function updateBooks(req, res) {
