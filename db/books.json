@@ -1,1 +1,32 @@
-[{"id":1,"title":"Things fall apart","author":"John Smith","published":"2015-12-12"},{"id":2,"title":"The Young Shall Grow","author":"Loche Smith","published":"2002-12-12"},{"title":"The Growth King","author":"Loche Rex","published":"2002-12-12","id":3},{"title":"The Future Time Travel","author":"Lexit Victor","published":"2024-12-12","id":4},{"title":"The Days of The Future Past","author":"X-Men","published":"1994-12-12","id":5}]
+[
+    {
+        "id": 1,
+        "title": "Things fall apart",
+        "author": "John Smith",
+        "published": "2015-12-12"
+    },
+    {
+        "id": 2,
+        "title": "The Young Shall Grow",
+        "author": "Loche Smith",
+        "published": "2002-12-12"
+    },
+    {
+        "title": "The Growth King",
+        "author": "Loche Rex",
+        "published": "2002-12-12",
+        "id": 3
+    },
+    {
+        "title": "The Future Time Travel",
+        "author": "Lexit Victor",
+        "published": "2024-12-12",
+        "id": 4
+    },
+    {
+        "title": "The Days of The Future Past",
+        "author": "X-Men",
+        "published": "1999-08-30",
+        "id": 5
+    }
+]

@@ -1,4 +1,4 @@
-# Basic API
+# Basic Bookstore API
 Testing out knowledge of API
 
 # Contributing
@@ -15,4 +15,4 @@ Then, run the development server:
 
 `npm run dev`
 
-Open http://localhost:4000 with Postman or Thunder Client in VSCode
+Open http://localhost:4000 with API testing tools such as `Postman` or `Thunder Client` in VSCode

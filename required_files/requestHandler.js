@@ -228,9 +228,32 @@ function returnBook(req, res, returnedBook) {
     })
 }
 
-function updateBooks(req, res) {
-    res.writeHead(200)
-    res.end('Book Updated Successfully')
+function updateBooks(req, res, detailsToUpdate) {
+    fs.readFile(booksDbPath, 'utf-8', (err, books) => {
+        if (err) {
+            res.writeHead(400)
+            console.log(err)
+        }
+
+        const allBooks = JSON.parse(books)
+        const bookIndex = allBooks.findIndex(book => book.id === detailsToUpdate.id)
+
+        if (bookIndex === -1) {
+            res.writeHead(404)
+            res.end('Book not found')
+        }
+
+        allBooks[bookIndex] = { ...allBooks[bookIndex], ...detailsToUpdate }
+
+        fs.writeFile(booksDbPath, JSON.stringify(allBooks), (err) => {
+            if (err) {
+                res.writeHead(500)
+                res.end('An error occurred when saving the file')
+                console.log(err)
+            }
+            res.end(JSON.stringify(allBooks))
+        })
+    })
 }
 
 
