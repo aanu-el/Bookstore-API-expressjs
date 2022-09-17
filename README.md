@@ -1,8 +1,8 @@
 # Basic Bookstore API
-Testing out knowledge of API
+Testing out knowledge of API with ExpressJs
 
 # Contributing
-This project is built with NodeJS.
+This project is built with ExpressJs.
 
 ## Pull Requests
 Pull Requests are welcome, please base your work on the `dev` branch, and make sure your pull requests are submitted against the `dev` branch.
