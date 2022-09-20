@@ -38,7 +38,6 @@ booksRoutes.post('/createBook', async (req, res) => {
     const newBook = req.body.book
 
     let allBooks = await fsPromises.readFile(booksDbPath)
-
     allBooks = JSON.parse(allBooks)
 
     let lastBookId = allBooks[allBooks.length - 1].id
@@ -50,6 +49,21 @@ booksRoutes.post('/createBook', async (req, res) => {
 
     res.status(200).json(newBook)
 
+})
+
+booksRoutes.delete('/deleteBook', async (req, res) => {
+    const bookId = req.body.book
+
+    let allBooks = await fsPromises.readFile(booksDbPath)
+    allBooks = JSON.parse(allBooks)
+
+    const bookToDelete = allBooks.findIndex(book => book.id === bookId)
+
+    allBooks.splice(bookToDelete, 1)
+
+    updatedBooks = await fsPromises.writeFile(booksDbPath, JSON.stringify(allBooks))
+
+    res.status(200).send("Book deleted successfully")
 })
 
 
