@@ -26,7 +26,7 @@
     {
         "username": "ipman",
         "password": "codebase12",
-        "role": "visitor",
+        "role": "admin",
         "id": 5
     }
 ]
