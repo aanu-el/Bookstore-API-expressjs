@@ -2,7 +2,6 @@
 const fsPromises = require('fs').promises
 const path = require('path')
 
-const booksDbPath = path.join(__dirname, '..', 'db', 'books.json')
 const usersDbPath = path.join(__dirname, '..', 'db', 'users.json')
 
 

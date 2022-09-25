@@ -6,22 +6,23 @@ const bodyParser = require('body-parser')
 
 const app = express()
 
-// Routes
+// --------------- Importing Routes ---------------------
 const booksRoutes = require('./routes/books')
 // const usersRoute = require('./routes/users')
 
-//Third Party Middleware
+// --------------- Third Party Middleware ---------------
 app.use(express.static('public'))
 app.use(bodyParser.json())
 
-// Template engine
+// ---------------- Template engine ---------------------
 app.set('view engine', 'ejs')
 app.set('views', 'views')
 
-// API Routes
+// ---------------- Use API Routes ------------------------
 app.use('/books', booksRoutes)
 // app.use('/users', usersRoute)
 
+// ---------------- Get All Routes ----------------------
 app.get('*', (req, res) => {
     res.status(404)
     res.send('404 Not Found')
