@@ -1,9 +1,8 @@
-
 const fsPromises = require('fs').promises
 const path = require('path')
 
 const usersDbPath = path.join(__dirname, '..', 'db', 'users.json')
-
+const redirect_page = path.join(__dirname, '..', 'public', '404.html')
 
 async function passwordAuthMiddleware(req, res, next) {
     const role = ['admin']

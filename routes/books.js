@@ -9,6 +9,8 @@ const bookController = require("../controllers/bookController")
 const { passwordAuthMiddleware, adminAuthMiddleware, visitorAuthMiddleware } = require('../middleware/auth.middleware')
 
 // ------------ Routes --------------
+booksRoutes.get('/', bookController.getAllBooks)
+
 booksRoutes.post('/create', [passwordAuthMiddleware, adminAuthMiddleware], bookController.createBook)
 
 booksRoutes.delete('/delete', [passwordAuthMiddleware, adminAuthMiddleware], bookController.deleteBook)

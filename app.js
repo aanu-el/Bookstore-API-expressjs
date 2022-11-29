@@ -20,10 +20,14 @@ app.use('/books', booksRoutes)
 app.use('/users', usersRoute)
 
 // ---------------- Get All Routes ----------------------
-app.get('*', (req, res) => {
-    res.status(404)
-    res.send('404 Not Found')
+app.get("/", (req, res) => {
+    res.status(200).send('Welcome to Home Page')
 })
+
+// app.get('*', (req, res) => {
+//     res.status(404)
+//     res.send('404 Not Found')
+// })
 
 //  Server Configuration
 const PORT = '4000'

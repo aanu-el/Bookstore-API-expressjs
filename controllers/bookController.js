@@ -3,21 +3,36 @@ const path = require('path')
 
 const booksDbPath = path.join(__dirname, '..', 'db', 'books.json')
 
+async function getAllBooks(req, res) {
+    try {
+        let allBooks = await fsPromises.readFile(booksDbPath)
+        allBooks = JSON.parse(allBooks)
+        res.json(allBooks)
+    } catch (error) {
+        error.type = 'Bad Request'
+        next(error)
+    }
+}
 
 async function createBook(req, res) {
-    const newBook = req.body.book
+    try {
+        const newBook = req.body.book
 
-    let allBooks = await fsPromises.readFile(booksDbPath)
-    allBooks = JSON.parse(allBooks)
+        let allBooks = await fsPromises.readFile(booksDbPath)
+        allBooks = JSON.parse(allBooks)
 
-    let lastBookId = allBooks[allBooks.length - 1].id
-    newBook.id = lastBookId + 1
+        let lastBookId = allBooks[allBooks.length - 1].id
+        newBook.id = lastBookId + 1
 
-    let updatedBooks = [...allBooks, newBook]
+        let updatedBooks = [...allBooks, newBook]
 
-    updatedBooks = await fsPromises.writeFile(booksDbPath, JSON.stringify(updatedBooks))
+        updatedBooks = await fsPromises.writeFile(booksDbPath, JSON.stringify(updatedBooks))
 
-    res.status(201).json(newBook)
+        res.status(201).json(newBook)
+    } catch (error) {
+        error.type = 'Bad Request'
+        next(error)
+    }
 }
 
 async function deleteBook(req, res) {
@@ -100,6 +115,7 @@ async function updateBook(req, res) {
 }
 
 module.exports = {
+    getAllBooks,
     createBook,
     deleteBook,
     loanBook,
