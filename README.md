@@ -18,3 +18,9 @@ Pull Requests are welcome, please base your work on the `dev` branch, and make s
 - Open http://localhost:4000 with API testing tools such as `Postman` or `Thunder Client` in VSCode
 
 - Test each Routes
+
+## Routes
+- GET
+- POST
+- PATCH
+- DELETE
