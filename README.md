@@ -19,8 +19,26 @@ Pull Requests are welcome, please base your work on the `dev` branch, and make s
 
 - Test each Routes
 
+## Requirements
+- users can sign up
+- users have two roles: visitor & admin
+- admin user can get all registered user and delete a user
+- both visitor and admin can view all available books
+- admin user can create, update, and delete books
+- visitor can loan and return books
+- Password authententication and Access control level implemented
+- File system DB 
+
 ## Routes
-- GET
-- POST
-- PATCH
-- DELETE
+- users
+- books
+
+### users route
+- GET: `/users/allUsers`
+- POST: `/users/login`, `/users/create`
+
+### books route
+- GET: `/books/`
+- POST: `/books/create`, `/books/loan`, `books/return`
+- PUT: `/books/:id`
+- DELETE: `/books/:id`
